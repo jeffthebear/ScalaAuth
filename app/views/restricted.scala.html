@@ -1,10 +1,10 @@
-@import service.UserProvider
-@(userProvider: UserProvider, localUser: models.User = null)
+@(message: String)
 
-@main(userProvider, Messages("playauthenticate.navigation.restricted"), "restricted") {
-    
-    <h1>@Messages("playauthenticate.navigation.restricted")</h1>
-    <p>
-        @Messages("playauthenticate.restricted.secrets")
-    </p>
+@main("Got to a restricted page") {
+
+<div class="jumbotron">
+    <h1>This is a restricted page</h1>
+    <p>Congratulations on logging in!</p>
+</div>
+
 }
