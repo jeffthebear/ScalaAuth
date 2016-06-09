@@ -1,12 +1,38 @@
-@(message: String)
+@(loginForm: Form[_])(implicit messages: Messages)
 
-@main("Welcome to Play") {
+@import helper._
+
+@main("Login") {
 
 <div class="row">
-    <div class="col-xs-6 col-sm-4">
-        <h1>Login</h1>
-    </div>
 
+    <h1>Login</h1>
+
+    @if(loginForm.hasGlobalErrors) {
+    <ul>
+        @for(error <- loginForm.globalErrors) {
+        <li>@Messages(error.messages, error.args)</li>
+        }
+    </ul>
+    }
+
+    @helper.form(action = routes.AuthController.doLogin()) {
+        <div class="form-group">
+            @inputText(
+                loginForm("username"),
+                '_showConstraints -> false,
+                '_label -> Messages("login.username.placeholder")
+            )
+        </div>
+        <div class="form-group">
+            @inputPassword(
+                loginForm("password"),
+                '_showConstraints -> false,
+                '_label -> Messages("login.password.placeholder")
+            )
+        </div>
+        <input type="submit" value="Login">
+    }
 </div>
 
 }

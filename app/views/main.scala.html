@@ -43,12 +43,13 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="@routes.HomeController.index">Home</a></li>
-                        <li><a href="@routes.HomeController.restricted">Restricted</a></li>
+                        <li><a href="@routes.RestrictedController.index">Restricted</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     @if(subjectNotPresent()) {
                         <li class="f"><a href="@routes.AuthController.login">Login</a></li>
                     }
+                        <li class="f"><a href="@routes.AuthController.logout">Logout</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

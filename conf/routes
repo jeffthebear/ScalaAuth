@@ -3,10 +3,11 @@
 # ~~~~
 
 GET     /                           controllers.HomeController.index
-GET     /restricted                 controllers.HomeController.restricted
+GET     /restricted                 controllers.RestrictedController.index
 
 GET     /login                      controllers.AuthController.login
 POST    /login                      controllers.AuthController.doLogin
+GET     /logout                     controllers.AuthController.logout
 
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
