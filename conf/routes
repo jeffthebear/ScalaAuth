@@ -4,6 +4,7 @@
 
 GET     /                           controllers.HomeController.index
 GET     /restricted                 controllers.RestrictedController.index
+GET     /unauthorized               controllers.RestrictedController.unauthorized
 
 GET     /login                      controllers.AuthController.login
 POST    /login                      controllers.AuthController.doLogin

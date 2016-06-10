@@ -33,9 +33,7 @@ class AuthController @Inject() (formsService: FormsService,
         /* binding success, you get the actual value. */
         if (authService.authenticateUser(userData.username, userData.password)) {
           val jwtClaim = JwtClaim().by("me").to("you").about(userData.username).issuedNow.startsNow.expiresIn(300)
-          Redirect(routes.HomeController.index)
-            .addingToJwtSession("user", userData.username)
-            .withSession("user" -> Jwt.encode(jwtClaim))
+          Redirect(routes.HomeController.index).addingToJwtSession("user", userData.username).withSession("user" -> Jwt.encode(jwtClaim))
         } else {
           val formWithError = loginForm.withGlobalError("username or password incorrect")
           BadRequest(views.html.login.render(formWithError, messages))

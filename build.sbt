@@ -11,7 +11,8 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
-  "com.pauldijou" %% "jwt-play" % "0.7.1"
+  "com.pauldijou" %% "jwt-play" % "0.7.1",
+  "be.objectify" %% "deadbolt-scala" % "2.5.0"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

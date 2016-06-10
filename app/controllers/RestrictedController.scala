@@ -1,29 +1,21 @@
 package controllers
 
 import javax.inject._
+import be.objectify.deadbolt.scala.ActionBuilders
 import play.api._
 import play.api.mvc._
 
-import pdi.jwt._
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
-class RestrictedController @Inject() extends Controller {
-  def index = Action { implicit request =>
-    def checkIfUserAuthorized(tokenString: String) : Boolean = {
-      val decodedToken = JwtJson.decodeAll(tokenString)
-      if (decodedToken.isFailure)
-        return false
-      val claim = decodedToken.get._2
-      return claim.subject.getOrElse("") == "admin"
-    }
-
-    val isAuthorized = request.session.get("user") match {
-      case Some(userToken) => checkIfUserAuthorized(userToken)
-      case None => false
-    }
-
-    if (isAuthorized)
+class RestrictedController @Inject() (actionBuilder: ActionBuilders) extends Controller {
+  def index = actionBuilder.RestrictAction("admin").defaultHandler() { implicit request =>
+    Future {
       Ok(views.html.restricted(""))
-    else
-      Ok(views.html.unauthorized(""))
+    }
+  }
+
+  def unauthorized = Action {
+    Ok(views.html.unauthorized(""))
   }
 }
