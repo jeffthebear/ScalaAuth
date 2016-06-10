@@ -3,6 +3,9 @@ package controllers
 import javax.inject._
 import play.api.i18n.{ I18nSupport, MessagesApi }
 import play.api.mvc._
+
+import pdi.jwt._
+
 import services.{AuthService, FormsService}
 
 @Singleton
@@ -29,7 +32,10 @@ class AuthController @Inject() (formsService: FormsService,
       userData => {
         /* binding success, you get the actual value. */
         if (authService.authenticateUser(userData.username, userData.password)) {
-          Redirect(routes.HomeController.index).withSession("username" -> userData.username)
+          val jwtClaim = JwtClaim().by("me").to("you").about(userData.username).issuedNow.startsNow.expiresIn(300)
+          Redirect(routes.HomeController.index)
+            .addingToJwtSession("user", userData.username)
+            .withSession("user" -> Jwt.encode(jwtClaim))
         } else {
           val formWithError = loginForm.withGlobalError("username or password incorrect")
           BadRequest(views.html.login.render(formWithError, messages))
