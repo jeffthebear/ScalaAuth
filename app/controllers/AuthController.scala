@@ -13,16 +13,13 @@ class AuthController @Inject() (formsService: FormsService,
                                 authService: AuthService,
                                 val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
-  def login() = Action { implicit request =>
-    // TODO: Figure out why messages is not being passed to view implicitly
-    implicit val messages = messagesApi.preferred(request)
+  def login() = Action { request =>
     val loginForm = formsService.getLoginForm
-    Ok(views.html.login.render(loginForm, messages))
+    Ok(views.html.login(loginForm))
   }
 
   def doLogin() = Action { implicit request =>
-    // TODO: Figure out why messages is not being passed to view implicitly
-    implicit val messages = messagesApi.preferred(request)
+    val messages = messagesApi.preferred(request)
     val loginForm = formsService.getLoginForm
     loginForm.bindFromRequest.fold(
       formWithErrors => {
